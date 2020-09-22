@@ -17,6 +17,7 @@ namespace MvvmApp.ViewModels
 
         public FriendsListViewModel ListViewModel
         {
+            //свойство получения/изменения и оповещения 
             get { return lvm; }
             set
             {
@@ -29,6 +30,7 @@ namespace MvvmApp.ViewModels
         }
         public string Name
         {
+            //свойство получения/изменения и оповещения 
             get { return Friend.Name; }
             set
             {
@@ -41,6 +43,7 @@ namespace MvvmApp.ViewModels
         }
         public string Email
         {
+            //свойство получения/изменения и оповещения 
             get { return Friend.Email; }
             set
             {
@@ -64,6 +67,7 @@ namespace MvvmApp.ViewModels
             }
         }
 
+        //проверка на валидность
         public bool IsValid
         {
             get

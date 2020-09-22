@@ -1,10 +1,4 @@
 ﻿using MvvmApp.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -15,7 +9,7 @@ namespace MvvmApp.Views
     {
         public FriendViewModel ViewModel { get; private set; }
         public FriendPage(FriendViewModel vm)
-        {
+        {//инициализация, сохранение вьюмодели и привязка её
             InitializeComponent();
             ViewModel = vm;
             this.BindingContext = ViewModel;

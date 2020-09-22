@@ -1,7 +1,5 @@
 ﻿using MvvmApp.Views;
-using System;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace MvvmApp
 {
@@ -9,6 +7,7 @@ namespace MvvmApp
     {
         public App()
         {
+            //установка стартовой страницы 
             MainPage = new NavigationPage(new FriendsListPage());
         }
 
