@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MvvmApp.Views.FriendPage" Title="Информация о друге">
+    <StackLayout>
+        <StackLayout x:Name="friendStack">
+            <Label Text="Имя" />
+            <Entry Text="{Binding Name}" FontSize="Medium" />
+            <Label Text="Электронная почта" />
+            <Entry Text="{Binding Email}" FontSize="Medium" />
+            <Label Text="Телефон" />
+            <Entry Text="{Binding Phone}" FontSize="Medium" />
+        </StackLayout>
+        <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+            <Button Text="Добавить" Command="{Binding ListViewModel.SaveFriendCommand}" CommandParameter="{Binding}" />
+            <Button Text="Удалить" Command="{Binding ListViewModel.DeleteFriendCommand}" CommandParameter="{Binding}" />
+            <Button Text="Назад" Command="{Binding Path=ListViewModel.BackCommand}" />
+        </StackLayout>
+    </StackLayout>
+</ContentPage>
