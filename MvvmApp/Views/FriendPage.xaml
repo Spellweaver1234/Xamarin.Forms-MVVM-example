@@ -12,7 +12,7 @@
             <Entry Text="{Binding Phone}" FontSize="Medium" />
         </StackLayout>
         <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
-            <Button Text="Добавить" Command="{Binding ListViewModel.SaveFriendCommand}" CommandParameter="{Binding}" />
+            <Button Text="Сохранить" Command="{Binding ListViewModel.SaveFriendCommand}" CommandParameter="{Binding}" />
             <Button Text="Удалить" Command="{Binding ListViewModel.DeleteFriendCommand}" CommandParameter="{Binding}" />
             <Button Text="Назад" Command="{Binding Path=ListViewModel.BackCommand}" />
         </StackLayout>

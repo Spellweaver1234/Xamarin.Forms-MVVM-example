@@ -5,10 +5,8 @@ namespace MvvmApp.ViewModels
 {
     public class FriendViewModel : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-        FriendsListViewModel lvm;
-
-        public Friend Friend { get; private set; }
+        public Friend Friend;
+        public FriendsListViewModel friendsListViewModel;
 
         public FriendViewModel()
         {
@@ -18,20 +16,21 @@ namespace MvvmApp.ViewModels
         public FriendsListViewModel ListViewModel
         {
             //свойство получения/изменения и оповещения 
-            get { return lvm; }
+            get => friendsListViewModel;
             set
             {
-                if (lvm != value)
+                if (friendsListViewModel != value)
                 {
-                    lvm = value;
+                    friendsListViewModel = value;
                     OnPropertyChanged("ListViewModel");
                 }
             }
         }
+
         public string Name
         {
             //свойство получения/изменения и оповещения 
-            get { return Friend.Name; }
+            get => Friend.Name;
             set
             {
                 if (Friend.Name != value)
@@ -41,10 +40,11 @@ namespace MvvmApp.ViewModels
                 }
             }
         }
+
         public string Email
         {
             //свойство получения/изменения и оповещения 
-            get { return Friend.Email; }
+            get => Friend.Email;
             set
             {
                 if (Friend.Email != value)
@@ -54,9 +54,10 @@ namespace MvvmApp.ViewModels
                 }
             }
         }
+
         public string Phone
         {
-            get { return Friend.Phone; }
+            get => Friend.Phone;
             set
             {
                 if (Friend.Phone != value)
@@ -68,19 +69,15 @@ namespace MvvmApp.ViewModels
         }
 
         //проверка на валидность
-        public bool IsValid
+        public bool IsValid()
         {
-            get
-            {
-                return (!string.IsNullOrEmpty(Name.Trim())) ||
-                    (!string.IsNullOrEmpty(Phone.Trim())) ||
-                    (!string.IsNullOrEmpty(Email.Trim()));
-            }
+            return (!string.IsNullOrEmpty(Name.Trim())) ||
+                (!string.IsNullOrEmpty(Phone.Trim())) ||
+                (!string.IsNullOrEmpty(Email.Trim()));
         }
-        protected void OnPropertyChanged(string propName)
-        {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(propName));
-        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged(string propName) =>
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
     }
 }

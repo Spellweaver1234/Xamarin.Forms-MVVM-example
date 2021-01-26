@@ -9,12 +9,10 @@ namespace MvvmApp.ViewModels
     public class FriendsListViewModel : INotifyPropertyChanged
     {
         public ObservableCollection<FriendViewModel> Friends { get; set; }
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public ICommand CreateFriendCommand { protected set; get; }
-        public ICommand DeleteFriendCommand { protected set; get; }
-        public ICommand SaveFriendCommand { protected set; get; }
-        public ICommand BackCommand { protected set; get; }
+        public ICommand CreateFriendCommand { get; set; }
+        public ICommand DeleteFriendCommand { get; set; }
+        public ICommand SaveFriendCommand { get; set; }
+        public ICommand BackCommand { get; set; }
 
         // для выбранного элемента из списка
         FriendViewModel selectedFriend;
@@ -31,62 +29,64 @@ namespace MvvmApp.ViewModels
             BackCommand = new Command(Back);
         }
 
-        //свойство выбора элемента из списка
-        public FriendViewModel SelectedFriend
-        {
-            get { return selectedFriend; }
-            set
-            {
-                if (selectedFriend != value)
-                {
-                    //зануляем выбранный элемент, оповещаем об этом и вызываем новую страницу с данными о выбранном элементе
-                    FriendViewModel tempFriend = value;
-                    selectedFriend = null;
-                    OnPropertyChanged("SelectedFriend");
-                    Navigation.PushAsync(new FriendPage(tempFriend));
-                }
-            }
-        }
-
-        protected void OnPropertyChanged(string propName)
-        {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(propName));
-        }
         //обработка метода создания элемента
         private void CreateFriend()
         {
-            //переход на новую страницу
             Navigation.PushAsync(new FriendPage(new FriendViewModel() { ListViewModel = this }));
         }
+
         private void Back()
         {
             //навигаци кнопки Назад
             Navigation.PopAsync();
         }
+
         private void SaveFriend(object friendObject)
         {
+            var item = ((FriendViewModel)friendObject);
             //проверка на наличие объекта
-            FriendViewModel friend = friendObject as FriendViewModel;
-            if (friend != null &&
-                friend.IsValid)
+            if (item.IsValid())
             {
+                if (Friends.Contains(item))
+                    Friends.Remove(item);
+
                 //добавление в коллекцию объекта
-                Friends.Add(friend);
+                Friends.Add(item);
             }
+
             //вызов Назад
             Back();
         }
+
         private void DeleteFriend(object friendObject)
         {
-            //проверка на наличие объекта
-            FriendViewModel friend = friendObject as FriendViewModel;
-            if (friend != null)
-            {//удаление объекта
-                Friends.Remove(friend);
-            }
+                //удаление объекта
+                Friends.Remove((FriendViewModel)friendObject);
+
             //вызов Назад
             Back();
+        }
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged(string propName) =>
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+
+        //свойство выбора элемента из списка
+        public FriendViewModel SelectedFriend
+        {
+            get => selectedFriend;
+            set
+            {
+                if (selectedFriend != value)
+                {
+                    //зануляем выбранный элемент, оповещаем об этом и вызываем новую страницу с данными о выбранном элементе
+                    var tempFriend = value;
+                    selectedFriend = null;
+                    OnPropertyChanged("SelectedFriend");
+                    Navigation.PushAsync(new FriendPage(tempFriend));
+                }
+            }
         }
     }
 }
